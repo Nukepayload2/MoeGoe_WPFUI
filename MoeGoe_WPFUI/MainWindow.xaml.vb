@@ -314,7 +314,7 @@ Class MainWindow
                 $"""{key}""\s*:\s*\[((?:\s*""(?:(?:\.)|[^\""])*""\s*,?\s*)*)\]")
         If match1.Success Then
             Dim matches1 As MatchCollection = Regex.Matches(match1.Groups(1).Value,
-        """""((?:(?:\.)|[^\""""])*)""""")
+        """((?:(?:\.)|[^\\""])*)""")
             If matches1.Count > 0 Then
                 For i As Integer = 0 To matches1.Count - 1
                     Dim speaker As String = Regex.Unescape(matches1(i).Groups(1).Value)
@@ -327,17 +327,17 @@ Class MainWindow
     End Function
     Private Sub InitializeSpeakers()
         Dim json As String = File.ReadAllText(_strCONFIGPATH)
-        Dim useF01 As Match = Regex.Match(json, """""use_f0""""\s*:\s*([A-Za-z]+)")
+        Dim useF01 As Match = Regex.Match(json, """use_f0""\s*:\s*([A-Za-z]+)")
         If useF01.Success Then
             _bUSEF0 = Boolean.Parse(useF01.Groups(1).Value)
         Else _bUSEF0 = False
         End If
         Dim match1 As Match = Regex.Match(json,
-                """""speakers""""\s*:\s*\[((?:\s*""""(?:(?:\.)|[^\""""])*""""\s*,?\s*)*)\]")
+                """speakers""\s*:\s*\[((?:\s*""(?:(?:\.)|[^\\""])*""""\s*,?\s*)*)\]")
         _lstSPEAKERS.Clear()
         If Not LoadJsonList(json, "speakers", AddressOf _lstSPEAKERS.Add) Then
             match1 = Regex.Match(json,
-    """""n_speakers""""\s*:\s*(\d+)")
+    """n_speakers""\s*:\s*(\d+)")
             Dim nspeakers As Integer = 0
             If match1.Success Then
                 nspeakers = Integer.Parse(match1.Groups(1).Value)
@@ -667,14 +667,15 @@ Class MainWindow
         win.ShowDialog()
     End Sub
     Private Sub ModelControl_SelectedIndexChanged() Handles modelControl.SelectionChanged
-        Select Case modelControl.SelectedIndex
-            Case 0
-                ClearVITS()
-            Case 1
-                ClearHubertVITS()
-            Case 2
-                ClearW2V2VITS()
-        End Select
+        '切换tab为什么要清除这些数据呢？
+        'Select Case modelControl.SelectedIndex
+        '    Case 0
+        '        ClearVITS()
+        '    Case 1
+        '        ClearHubertVITS()
+        '    Case 2
+        '        ClearW2V2VITS()
+        'End Select
     End Sub
     Private Sub CheckModelHubert()
         ClearHubertMode()
@@ -882,7 +883,9 @@ Class MainWindow
     Private Sub EmotionPath_KeyDown(sender As Object, e As KeyEventArgs) Handles emotionPath.KeyDown
         GetHistory(emotionPath, "_EMOTIONPATHS", e)
     End Sub
-    Private Sub SearchSpeakers(sender As Object, e As KeyEventArgs) Handles speakerBox.KeyDown
+    Private Sub SearchSpeakers(sender As Object, e As KeyEventArgs) Handles speakerBox.KeyDown, originBox.KeyDown, targetBox.KeyDown,
+        HTargetBox.KeyDown, HOriginBox.KeyDown, HTargetBox2.KeyDown, WSpeakerBox.KeyDown, WOriginBox.KeyDown, WTargetBox.KeyDown
+
         If e.Key = Input.Key.Enter Then
             SelectSpeakers(TryCast(sender, ComboBox))
         End If
@@ -929,15 +932,15 @@ Public Class ExList(Of T)
     End Property
 
     Public Sub New(range As Integer)
+        list1 = New List(Of T)
         Index = -1
         Me.range = range
-        list1 = New List(Of T)
     End Sub
 
     Public Sub New(collection As IEnumerable(Of T), range As Integer)
+        list1 = New List(Of T)(collection)
         Index = -1
         Me.range = range
-        list1 = New List(Of T)(collection)
     End Sub
     Public Sub Add(item As T)
         list1.Remove(item)
