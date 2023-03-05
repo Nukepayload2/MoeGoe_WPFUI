@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Media
 Imports System.Runtime.InteropServices
+Imports System.Text.Json.Nodes
 Imports System.Text.RegularExpressions
 Imports System.Threading
 
@@ -309,51 +310,42 @@ Class MainWindow
             InitializeSpeakers()
         End If
     End Sub
-    Private Function LoadJsonList(json As String, key As String, action1 As Action(Of String)) As Boolean
-        Dim match1 As Match = Regex.Match(json,
-                $"""{key}""\s*:\s*\[((?:\s*""(?:(?:\.)|[^\""])*""\s*,?\s*)*)\]")
-        If match1.Success Then
-            Dim matches1 As MatchCollection = Regex.Matches(match1.Groups(1).Value,
-        """((?:(?:\.)|[^\\""])*)""")
-            If matches1.Count > 0 Then
-                For i As Integer = 0 To matches1.Count - 1
-                    Dim speaker As String = Regex.Unescape(matches1(i).Groups(1).Value)
-                    action1(speaker)
-                Next
-            End If
-            Return True
-        End If
-        Return False
-    End Function
+
     Private Sub InitializeSpeakers()
-        Dim json As String = File.ReadAllText(_strCONFIGPATH)
-        Dim useF01 As Match = Regex.Match(json, """use_f0""\s*:\s*([A-Za-z]+)")
-        If useF01.Success Then
-            _bUSEF0 = Boolean.Parse(useF01.Groups(1).Value)
-        Else _bUSEF0 = False
-        End If
-        Dim match1 As Match = Regex.Match(json,
-                """speakers""\s*:\s*\[((?:\s*""(?:(?:\.)|[^\\""])*""""\s*,?\s*)*)\]")
-        _lstSPEAKERS.Clear()
-        If Not LoadJsonList(json, "speakers", AddressOf _lstSPEAKERS.Add) Then
-            match1 = Regex.Match(json,
-    """n_speakers""\s*:\s*(\d+)")
-            Dim nspeakers As Integer = 0
-            If match1.Success Then
-                nspeakers = Integer.Parse(match1.Groups(1).Value)
+        Using jsonStrm = File.OpenRead(_strCONFIGPATH)
+            Dim jObj = JsonNode.Parse(jsonStrm).AsObject
+            LoadJsonList(jObj, "speakers", _lstSPEAKERS)
+            If _lstSPEAKERS.Count = 0 Then
+                Dim nSpeakers As JsonNode = Nothing
+                If jObj.TryGetPropertyValue("n_speakers", nSpeakers) Then
+                    Dim speakerCount = nSpeakers.AsValue.GetValue(Of Integer)
+                    If nSpeakers.AsValue.GetValue(Of Integer) Then
+                        For i = 0 To speakerCount - 1
+                            _lstSPEAKERS.Add(i.ToString())
+                        Next
+                    Else
+                        _lstSPEAKERS.Add("0")
+                    End If
+                End If
             End If
-            If nspeakers = 0 Then
-                _lstSPEAKERS.Add("0")
-            Else For i As Integer = 0 To nspeakers - 1
-                    _lstSPEAKERS.Add(i.ToString())
-                Next
-            End If
-        End If
-        AddSpeakers()
-        _lstSYMBOLS.Clear()
-        LoadJsonList(json, "symbols", AddressOf _lstSYMBOLS.Add)
-        GetStart()
+            AddSpeakers()
+            _lstSYMBOLS.Clear()
+            LoadJsonList(jObj, "symbols", _lstSYMBOLS)
+            GetStart()
+        End Using
     End Sub
+
+    Private Sub LoadJsonList(jObj As JsonObject, key As String, list As List(Of String))
+        Dim speakerArray As JsonNode = Nothing
+        list.Clear()
+        If jObj.TryGetPropertyValue(key, speakerArray) Then
+            For Each element In speakerArray.AsArray
+                Dim speakerValue = element.AsValue?.GetValue(Of String)
+                list.Add(speakerValue)
+            Next
+        End If
+    End Sub
+
     Private Sub AddSpeakers()
         Select Case modelControl.SelectedIndex
             Case 0
@@ -723,7 +715,7 @@ Class MainWindow
         End If
         If e.Key = Input.Key.Up Then
             box.Text = list1.[Next]()
-        ElseIf e.key = Input.Key.Down Then
+        ElseIf e.Key = Input.Key.Down Then
             box.Text = list1.Previous()
         End If
     End Sub
