@@ -56,7 +56,7 @@
                 <TextBox x:Name="EXEPath" Grid.Column="1"/>
             </Grid>
         </GroupBox>
-        <TabControl Grid.Row="1">
+        <TabControl x:Name="modelControl" Grid.Row="1">
             <TabItem Header="VITS">
                 <Grid>
                     <Grid>
@@ -80,7 +80,7 @@
                                 <TextBox x:Name="configPath" Grid.Row="1" Grid.Column="1"/>
                             </Grid>
                         </GroupBox>
-                        <TabControl Grid.Row="1">
+                        <TabControl x:Name="modeControl" Grid.Row="1">
                             <TabItem Header="语音合成">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -105,7 +105,23 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="语音转换">
-                                <Grid Background="#FFE5E5E5"/>
+                                <Grid Margin="4" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Button x:Name="openOrigin" Content="打开原音频"/>
+                                    <TextBox x:Name="originPath" Grid.Column="1"/>
+                                    <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="原说话人" Margin="16,0" VerticalAlignment="Center"/>
+                                    <ComboBox x:Name="originBox" Grid.Column="1" Grid.Row="1"/>
+                                    <TextBlock HorizontalAlignment="Center" Grid.Row="2" Text="目标说话人" Margin="16,0" VerticalAlignment="Center"/>
+                                    <ComboBox x:Name="targetBox" Grid.Column="1" Grid.Row="2" />
+                                </Grid>
                             </TabItem>
                         </TabControl>
                     </Grid>
@@ -145,7 +161,7 @@
                         <Button x:Name="HOpenOrigin" Content="打开原音频"/>
                         <TextBox x:Name="HOriginPath" Grid.Column="1"/>
                     </Grid>
-                    <TabControl Grid.Row="2">
+                    <TabControl x:Name="HVCControl" Grid.Row="2">
                         <TabItem Header="语言转换（模式一）">
                             <Grid VerticalAlignment="Center" Margin="4,0">
                                 <Grid.ColumnDefinitions>
@@ -203,7 +219,7 @@
                         </Grid>
                     </GroupBox>
 
-                    <TabControl Grid.Row="1">
+                    <TabControl x:Name="WModeControl" Grid.Row="1">
                         <TabItem Header="语音合成">
                             <Grid Margin="4">
                                 <Grid.ColumnDefinitions>
@@ -247,7 +263,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <GroupBox Grid.Row="2" Header="保存文件">
+        <GroupBox x:Name="savePanel" Grid.Row="2" Header="保存文件">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

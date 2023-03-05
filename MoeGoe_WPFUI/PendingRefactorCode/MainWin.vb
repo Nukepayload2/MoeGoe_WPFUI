@@ -8,86 +8,86 @@ Imports System.Windows.Forms
 Imports System.Runtime.InteropServices
 
 Namespace MoeGoe_GUI
-    Public Partial Class MainWin
+    Partial Public Class MainWin
         Inherits Form
         Public Sub New()
             InitializeComponent()
 
-            DEFAULTS = New ExDictionary(Of String, ExList(Of String))(Function() As MoeGoe_GUI.ExList(Of String)
-                                                                          Return New ExList(Of String)(5)
-                                                                      End Function)
+            _DEFAULTS = New ExDictionary(Of String, ExList(Of String))(Function() As MoeGoe_GUI.ExList(Of String)
+                                                                           Return New ExList(Of String)(5)
+                                                                       End Function)
 
             If File.Exists("MoeGoe_GUI.config") Then
                 For Each line As String In File.ReadLines("MoeGoe_GUI.config")
                     Dim split1 As String() = line.Split(">"c)
-                    DEFAULTS.Add(split1(0), New ExList(Of String)(split1(1).Split("|"c), 5))
+                    _DEFAULTS.Add(split1(0), New ExList(Of String)(split1(1).Split("|"c), 5))
                 Next
             End If
 
-            If Not DEFAULTS.ContainsKey("D1") Then
-                DEFAULTS("D1").Add("[ZH][ZH]")
+            If Not _DEFAULTS.ContainsKey("D1") Then
+                _DEFAULTS("D1").Add("[ZH][ZH]")
             End If
-            If Not DEFAULTS.ContainsKey("D2") Then
-                DEFAULTS("D2").Add("[JA][JA]")
+            If Not _DEFAULTS.ContainsKey("D2") Then
+                _DEFAULTS("D2").Add("[JA][JA]")
             End If
-            If Not DEFAULTS.ContainsKey("D3") Then
-                DEFAULTS("D3").Add("[KO][KO]")
+            If Not _DEFAULTS.ContainsKey("D3") Then
+                _DEFAULTS("D3").Add("[KO][KO]")
             End If
-            If Not DEFAULTS.ContainsKey("D4") Then
-                DEFAULTS("D4").Add("[SA][SA]")
+            If Not _DEFAULTS.ContainsKey("D4") Then
+                _DEFAULTS("D4").Add("[SA][SA]")
             End If
-            If Not DEFAULTS.ContainsKey("D5") Then
-                DEFAULTS("D5").Add("[EN][EN]")
+            If Not _DEFAULTS.ContainsKey("D5") Then
+                _DEFAULTS("D5").Add("[EN][EN]")
             End If
-            If Not DEFAULTS.ContainsKey("D6") Then
-                DEFAULTS("D6").Add("[SH][SH]")
+            If Not _DEFAULTS.ContainsKey("D6") Then
+                _DEFAULTS("D6").Add("[SH][SH]")
             End If
-            If Not DEFAULTS.ContainsKey("D7") Then
-                DEFAULTS("D7").Add("[GD][GD]")
+            If Not _DEFAULTS.ContainsKey("D7") Then
+                _DEFAULTS("D7").Add("[GD][GD]")
             End If
-            If Not DEFAULTS.ContainsKey("D8") Then
-                DEFAULTS("D8").Add("[WZ][WZ]")
+            If Not _DEFAULTS.ContainsKey("D8") Then
+                _DEFAULTS("D8").Add("[WZ][WZ]")
             End If
-            If Not DEFAULTS.ContainsKey("D9") Then
-                DEFAULTS("D9").Add("[SZ][SZ]")
+            If Not _DEFAULTS.ContainsKey("D9") Then
+                _DEFAULTS("D9").Add("[SZ][SZ]")
             End If
-            If Not DEFAULTS.ContainsKey("D0") Then
-                DEFAULTS("D0").Add("[TH][TH]")
+            If Not _DEFAULTS.ContainsKey("D0") Then
+                _DEFAULTS("D0").Add("[TH][TH]")
             End If
 
-            _LENGTHSCALE = 1
-            _NOISESCALE = 0.667D
-            _NOISESCALEW = 0.8D
-            _F0SCALE = 1
+            _decLENGTHSCALE = 1
+            _decNOISESCALE = 0.667D
+            _decNOISESCALEW = 0.8D
+            _decF0SCALE = 1
 
-            _SPEAKERS = New List(Of String)
-            _SYMBOLS = New List(Of String)
-            _SPEAKERIDDICT = New Dictionary(Of ComboBox, Dictionary(Of Integer, Integer))
+            _lstSPEAKERS = New List(Of String)
+            _lstSYMBOLS = New List(Of String)
+            _dicSPEAKERIDDICT = New Dictionary(Of ComboBox, Dictionary(Of Integer, Integer))
             _isSeeking = False
 
-            If DEFAULTS.ContainsKey("EXEPATHS") Then
-                EXEPATH1 = __InlineAssignHelper(EXEPath.Text, DEFAULTS("EXEPATHS").[Next]())
+            If _DEFAULTS.ContainsKey("EXEPATHS") Then
+                _strEXEPATH1 = __InlineAssignHelper(EXEPath.Text, _DEFAULTS("EXEPATHS").[Next]())
                 modelControl.Enabled = True
             End If
         End Sub
-        Private cmd As CommandLine
-        Private ReadOnly DEFAULTS As ExDictionary(Of String, ExList(Of String))
-        Private EXEPATH1 As String
-        Private _MODELPATH As String
-        Private _CONFIGPATH As String
-        Private _HUBERTPATH As String
-        Private _W2V2PATH As String
-        Private _SAVEPATH As String
-        Private _ORIGINPATH As String
-        Private _EMOTIONPATH As String
-        Private _LENGTHSCALE As Decimal
-        Private _NOISESCALE As Decimal
-        Private _NOISESCALEW As Decimal
-        Private _F0SCALE As Decimal
-        Private ReadOnly _SPEAKERS As List(Of String)
-        Private ReadOnly _SYMBOLS As List(Of String)
-        Private ReadOnly _SPEAKERIDDICT As Dictionary(Of ComboBox, Dictionary(Of Integer, Integer))
-        Private _USEF0 As Boolean
+        Private _cmd As CommandLine
+        Private ReadOnly _DEFAULTS As ExDictionary(Of String, ExList(Of String))
+        Private _strEXEPATH1 As String
+        Private _strMODELPATH As String
+        Private _strCONFIGPATH As String
+        Private _strHUBERTPATH As String
+        Private _strW2V2PATH As String
+        Private _strSAVEPATH As String
+        Private _strORIGINPATH As String
+        Private _strEMOTIONPATH As String
+        Private _decLENGTHSCALE As Decimal
+        Private _decNOISESCALE As Decimal
+        Private _decNOISESCALEW As Decimal
+        Private _decF0SCALE As Decimal
+        Private ReadOnly _lstSPEAKERS As List(Of String)
+        Private ReadOnly _lstSYMBOLS As List(Of String)
+        Private ReadOnly _dicSPEAKERIDDICT As Dictionary(Of ComboBox, Dictionary(Of Integer, Integer))
+        Private _bUSEF0 As Boolean
         Private _isSeeking As Boolean
         Private _player As SoundPlayer
         Private Sub ClearAll()
@@ -97,9 +97,9 @@ Namespace MoeGoe_GUI
         End Sub
         Private Sub ClearVITS()
             modelPath.Clear()
-            _MODELPATH = Nothing
+            _strMODELPATH = Nothing
             configPath.Clear()
-            _CONFIGPATH = Nothing
+            _strCONFIGPATH = Nothing
             ClearMode()
         End Sub
         Private Sub ClearMode()
@@ -107,11 +107,11 @@ Namespace MoeGoe_GUI
             textBox.Clear()
             speakerBox.Items.Clear()
             speakerBox.Text = ""
-            _LENGTHSCALE = 1
-            _NOISESCALE = 0.667D
-            _NOISESCALEW = 0.8D
+            _decLENGTHSCALE = 1
+            _decNOISESCALE = 0.667D
+            _decNOISESCALEW = 0.8D
             originPath.Clear()
-            _ORIGINPATH = Nothing
+            _strORIGINPATH = Nothing
             originBox.Items.Clear()
             originBox.Text = ""
             targetBox.Items.Clear()
@@ -121,25 +121,25 @@ Namespace MoeGoe_GUI
         End Sub
         Private Sub ClearHubertVITS()
             HModelPath.Clear()
-            _MODELPATH = Nothing
+            _strMODELPATH = Nothing
             HConfigPath.Clear()
-            _CONFIGPATH = Nothing
+            _strCONFIGPATH = Nothing
             hubertPath.Clear()
-            _HUBERTPATH = Nothing
+            _strHUBERTPATH = Nothing
             ClearHubertMode()
         End Sub
         Private Sub ClearHubertMode()
             consoleBox.Clear()
             HOriginPath.Clear()
-            _ORIGINPATH = Nothing
+            _strORIGINPATH = Nothing
             HOpenOrigin.Enabled = False
             HOriginPath.Enabled = False
             HTargetBox.Items.Clear()
             HTargetBox.Text = ""
-            _LENGTHSCALE = 1
-            _NOISESCALE = 0.1D
-            _NOISESCALEW = 0.1D
-            _F0SCALE = 1
+            _decLENGTHSCALE = 1
+            _decNOISESCALE = 0.1D
+            _decNOISESCALEW = 0.1D
+            _decF0SCALE = 1
             HOriginBox.Items.Clear()
             HOriginBox.Text = ""
             HTargetBox2.Items.Clear()
@@ -149,25 +149,25 @@ Namespace MoeGoe_GUI
         End Sub
         Private Sub ClearW2V2VITS()
             WModelPath.Clear()
-            _MODELPATH = Nothing
+            _strMODELPATH = Nothing
             WConfigPath.Clear()
-            _CONFIGPATH = Nothing
+            _strCONFIGPATH = Nothing
             W2V2Path.Clear()
-            _W2V2PATH = Nothing
+            _strW2V2PATH = Nothing
             ClearW2V2Mode()
         End Sub
         Private Sub ClearW2V2Mode()
             consoleBox.Clear()
             emotionPath.Clear()
-            _EMOTIONPATH = Nothing
+            _strEMOTIONPATH = Nothing
             WTextBox.Clear()
             WSpeakerBox.Items.Clear()
             WSpeakerBox.Text = ""
-            _LENGTHSCALE = 1
-            _NOISESCALE = 0.667D
-            _NOISESCALEW = 0.8D
+            _decLENGTHSCALE = 1
+            _decNOISESCALE = 0.667D
+            _decNOISESCALEW = 0.8D
             WOriginPath.Clear()
-            _ORIGINPATH = Nothing
+            _strORIGINPATH = Nothing
             WOriginBox.Items.Clear()
             WOriginBox.Text = ""
             WTargetBox.Items.Clear()
@@ -177,7 +177,7 @@ Namespace MoeGoe_GUI
         End Sub
         Private Sub ClearSavePanel()
             savePath.Clear()
-            _SAVEPATH = Nothing
+            _strSAVEPATH = Nothing
             savePanel.Enabled = False
             resaveButton.Enabled = False
             _isSeeking = False
@@ -193,7 +193,7 @@ Namespace MoeGoe_GUI
             }
             If ofd.ShowDialog() = DialogResult.OK Then
                 ClearAll()
-                DEFAULTS("EXEPATHS").Add(__InlineAssignHelper(EXEPATH1, __InlineAssignHelper(EXEPath.Text, ofd.FileName)))
+                _DEFAULTS("EXEPATHS").Add(__InlineAssignHelper(_strEXEPATH1, __InlineAssignHelper(EXEPath.Text, ofd.FileName)))
                 modelControl.Enabled = True
             End If
             ofd.Dispose()
@@ -205,7 +205,7 @@ Namespace MoeGoe_GUI
                         MessageBoxButtons.OK, MessageBoxIcon.[Error])
                 Else
                     ClearAll()
-                    DEFAULTS("EXEPATHS").Add(__InlineAssignHelper(EXEPATH1, EXEPath.Text))
+                    _DEFAULTS("EXEPATHS").Add(__InlineAssignHelper(_strEXEPATH1, EXEPath.Text))
                     modelControl.Enabled = True
                 End If
             End If
@@ -240,7 +240,7 @@ Namespace MoeGoe_GUI
             .Filter = "模型文件|*.pth|所有文件|*.*"
             }
             If ofd.ShowDialog() = DialogResult.OK Then
-                DEFAULTS(key).Add(__InlineAssignHelper(_MODELPATH, __InlineAssignHelper(box.Text, ofd.FileName)))
+                _DEFAULTS(key).Add(__InlineAssignHelper(_strMODELPATH, __InlineAssignHelper(box.Text, ofd.FileName)))
                 check()
             End If
             ofd.Dispose()
@@ -255,7 +255,7 @@ Namespace MoeGoe_GUI
                     MessageBox.Show("文件不存在！", "",
                         MessageBoxButtons.OK, MessageBoxIcon.[Error])
                 Else
-                    DEFAULTS(key).Add(__InlineAssignHelper(_MODELPATH, box.Text))
+                    _DEFAULTS(key).Add(__InlineAssignHelper(_strMODELPATH, box.Text))
                     check()
                 End If
             End If
@@ -290,7 +290,7 @@ Namespace MoeGoe_GUI
             .Filter = "配置文件|*.json"
             }
             If ofd.ShowDialog() = DialogResult.OK Then
-                DEFAULTS(key).Add(__InlineAssignHelper(_CONFIGPATH, __InlineAssignHelper(box.Text, ofd.FileName)))
+                _DEFAULTS(key).Add(__InlineAssignHelper(_strCONFIGPATH, __InlineAssignHelper(box.Text, ofd.FileName)))
                 check()
             End If
             ofd.Dispose()
@@ -305,14 +305,14 @@ Namespace MoeGoe_GUI
                     MessageBox.Show("文件不存在！", "",
                         MessageBoxButtons.OK, MessageBoxIcon.[Error])
                 Else
-                    DEFAULTS(key).Add(__InlineAssignHelper(_CONFIGPATH, box.Text))
+                    _DEFAULTS(key).Add(__InlineAssignHelper(_strCONFIGPATH, box.Text))
                     check()
                 End If
             End If
         End Sub
         Private Sub CheckModel()
             ClearMode()
-            If _MODELPATH IsNot Nothing AndAlso _CONFIGPATH IsNot Nothing Then
+            If _strMODELPATH IsNot Nothing AndAlso _strCONFIGPATH IsNot Nothing Then
                 InitializeSpeakers()
             End If
         End Sub
@@ -333,16 +333,16 @@ Namespace MoeGoe_GUI
             Return False
         End Function
         Private Sub InitializeSpeakers()
-            Dim json As String = File.ReadAllText(_CONFIGPATH)
+            Dim json As String = File.ReadAllText(_strCONFIGPATH)
             Dim useF01 As Match = Regex.Match(json, """""use_f0""""\s*:\s*([A-Za-z]+)")
             If useF01.Success Then
-                _USEF0 = Boolean.Parse(useF01.Groups(1).Value)
-            Else _USEF0 = False
+                _bUSEF0 = Boolean.Parse(useF01.Groups(1).Value)
+            Else _bUSEF0 = False
             End If
             Dim match1 As Match = Regex.Match(json,
                 """""speakers""""\s*:\s*\[((?:\s*""""(?:(?:\.)|[^\""""])*""""\s*,?\s*)*)\]")
-            _SPEAKERS.Clear()
-            If Not LoadJsonList(json, "speakers", AddressOf _SPEAKERS.Add) Then
+            _lstSPEAKERS.Clear()
+            If Not LoadJsonList(json, "speakers", AddressOf _lstSPEAKERS.Add) Then
                 match1 = Regex.Match(json,
     """""n_speakers""""\s*:\s*(\d+)")
                 Dim nspeakers As Integer = 0
@@ -350,15 +350,15 @@ Namespace MoeGoe_GUI
                     nspeakers = Integer.Parse(match1.Groups(1).Value)
                 End If
                 If nspeakers = 0 Then
-                    _SPEAKERS.Add("0")
+                    _lstSPEAKERS.Add("0")
                 Else For i As Integer = 0 To nspeakers - 1
-                        _SPEAKERS.Add(i.ToString())
+                        _lstSPEAKERS.Add(i.ToString())
                     Next
                 End If
             End If
             AddSpeakers()
-            _SYMBOLS.Clear()
-            LoadJsonList(json, "symbols", AddressOf _SYMBOLS.Add)
+            _lstSYMBOLS.Clear()
+            LoadJsonList(json, "symbols", AddressOf _lstSYMBOLS.Add)
             GetStart()
         End Sub
         Private Sub AddSpeakers()
@@ -378,21 +378,21 @@ Namespace MoeGoe_GUI
             End Select
         End Sub
         Private Sub GetStart()
-            cmd = New CommandLine
-            AddHandler cmd.OutputHandler, AddressOf Cmd_OutputHandler
-            cmd.Write($"""{EXEPATH1}"" --escape")
-            cmd.Write(_MODELPATH)
-            cmd.Write(_CONFIGPATH)
+            _cmd = New CommandLine
+            AddHandler _cmd.OutputHandler, AddressOf Cmd_OutputHandler
+            _cmd.Write($"""{_strEXEPATH1}"" --escape")
+            _cmd.Write(_strMODELPATH)
+            _cmd.Write(_strCONFIGPATH)
             Select Case modelControl.SelectedIndex
                 Case 0
                     modeControl.Enabled = True
                 Case 1
-                    cmd.Write(_HUBERTPATH)
+                    _cmd.Write(_strHUBERTPATH)
                     HOpenOrigin.Enabled = True
                     HOriginPath.Enabled = True
                     HVCControl.Enabled = True
                 Case 2
-                    cmd.Write(_W2V2PATH)
+                    _cmd.Write(_strW2V2PATH)
                     WModeControl.Enabled = True
             End Select
             savePanel.Enabled = True
@@ -425,7 +425,7 @@ Namespace MoeGoe_GUI
             .Filter = "音频文件|*.wav;*.mp3;*.ogg;*.opus"
             }
             If ofd.ShowDialog() = DialogResult.OK Then
-                DEFAULTS("AUDIOPATHS").Add(__InlineAssignHelper(_ORIGINPATH, __InlineAssignHelper(box.Text, ofd.FileName)))
+                _DEFAULTS("AUDIOPATHS").Add(__InlineAssignHelper(_strORIGINPATH, __InlineAssignHelper(box.Text, ofd.FileName)))
             End If
             ofd.Dispose()
         End Sub
@@ -435,7 +435,7 @@ Namespace MoeGoe_GUI
                 If Not File.Exists(textBox.Text) Then
                     MessageBox.Show("文件不存在！", "",
                         MessageBoxButtons.OK, MessageBoxIcon.[Error])
-                Else DEFAULTS("AUDIOPATHS").Add(__InlineAssignHelper(_ORIGINPATH, textBox.Text))
+                Else _DEFAULTS("AUDIOPATHS").Add(__InlineAssignHelper(_strORIGINPATH, textBox.Text))
                 End If
             End If
         End Sub
@@ -456,7 +456,7 @@ Namespace MoeGoe_GUI
                             End If
                             Return True
                         Case 1
-                            If _ORIGINPATH Is Nothing Then
+                            If _strORIGINPATH Is Nothing Then
                                 MessageBox.Show("请指定原音频！", "",
         MessageBoxButtons.OK, MessageBoxIcon.Warning)
                                 Return False
@@ -475,7 +475,7 @@ Namespace MoeGoe_GUI
                     End Select
                     Return False
                 Case 1
-                    If _ORIGINPATH Is Nothing Then
+                    If _strORIGINPATH Is Nothing Then
                         MessageBox.Show("请指定原音频！", "",
         MessageBoxButtons.OK, MessageBoxIcon.Warning)
                         Return False
@@ -505,7 +505,7 @@ Namespace MoeGoe_GUI
                 Case 2
                     Select Case WModeControl.SelectedIndex
                         Case 0
-                            If _EMOTIONPATH Is Nothing Then
+                            If _strEMOTIONPATH Is Nothing Then
                                 MessageBox.Show("请指定情感参考！", "",
         MessageBoxButtons.OK, MessageBoxIcon.Warning)
                             End If
@@ -521,7 +521,7 @@ Namespace MoeGoe_GUI
                             End If
                             Return True
                         Case 1
-                            If _ORIGINPATH Is Nothing Then
+                            If _strORIGINPATH Is Nothing Then
                                 MessageBox.Show("请指定原音频！", "",
         MessageBoxButtons.OK, MessageBoxIcon.Warning)
                                 Return False
@@ -549,7 +549,7 @@ Namespace MoeGoe_GUI
             .Filter = "音频文件|*.wav"
             }
             If sfd.ShowDialog() = DialogResult.OK Then
-                DEFAULTS("_SAVEPATHS").Add(__InlineAssignHelper(_SAVEPATH, __InlineAssignHelper(savePath.Text, sfd.FileName)))
+                _DEFAULTS("_SAVEPATHS").Add(__InlineAssignHelper(_strSAVEPATH, __InlineAssignHelper(savePath.Text, sfd.FileName)))
                 SaveAudio()
             End If
             sfd.Dispose()
@@ -558,7 +558,7 @@ Namespace MoeGoe_GUI
             If Not IsFilled() Then
                 Return
             End If
-            Dim directory As String = Path.GetDirectoryName(_SAVEPATH)
+            Dim directory As String = Path.GetDirectoryName(_strSAVEPATH)
             If Not IO.Directory.Exists(directory) Then
                 IO.Directory.CreateDirectory(directory)
             End If
@@ -573,34 +573,34 @@ Namespace MoeGoe_GUI
                         Case 1
                             VC(GetSelectedID(originBox), GetSelectedID(targetBox))
                     End Select
-                    cmd.Write(_SAVEPATH)
+                    _cmd.Write(_strSAVEPATH)
                 Case 1
                     Select Case HVCControl.SelectedIndex
                         Case 0
-                            cmd.Write(_ORIGINPATH)
-                            cmd.Write(GetSelectedID(HTargetBox).ToString())
-                            If _USEF0 Then
-                                cmd.Write($"[LENGTH={_LENGTHSCALE}][NOISE={_NOISESCALE}][NOISEW={_NOISESCALEW}][F0={_F0SCALE}]{_SAVEPATH}")
-                            Else cmd.Write($"[LENGTH={_LENGTHSCALE}][NOISE={_NOISESCALE}][NOISEW={_NOISESCALEW}]{_SAVEPATH}")
+                            _cmd.Write(_strORIGINPATH)
+                            _cmd.Write(GetSelectedID(HTargetBox).ToString())
+                            If _bUSEF0 Then
+                                _cmd.Write($"[LENGTH={_decLENGTHSCALE}][NOISE={_decNOISESCALE}][NOISEW={_decNOISESCALEW}][F0={_decF0SCALE}]{_strSAVEPATH}")
+                            Else _cmd.Write($"[LENGTH={_decLENGTHSCALE}][NOISE={_decNOISESCALE}][NOISEW={_decNOISESCALEW}]{_strSAVEPATH}")
                             End If
                         Case 1
-                            cmd.Write($"[VC]")
-                            cmd.Write(_ORIGINPATH)
-                            cmd.Write(GetSelectedID(HOriginBox).ToString())
-                            cmd.Write(GetSelectedID(HTargetBox2).ToString())
-                            cmd.Write(_SAVEPATH)
+                            _cmd.Write($"[VC]")
+                            _cmd.Write(_strORIGINPATH)
+                            _cmd.Write(GetSelectedID(HOriginBox).ToString())
+                            _cmd.Write(GetSelectedID(HTargetBox2).ToString())
+                            _cmd.Write(_strSAVEPATH)
                     End Select
                 Case 2
                     Select Case WModeControl.SelectedIndex
                         Case 0
                             TTS(WTextBox.Text, GetSelectedID(WSpeakerBox))
-                            cmd.Write(_EMOTIONPATH)
+                            _cmd.Write(_strEMOTIONPATH)
                         Case 1
                             VC(GetSelectedID(WOriginBox), GetSelectedID(WTargetBox))
                     End Select
-                    cmd.Write(_SAVEPATH)
+                    _cmd.Write(_strSAVEPATH)
             End Select
-            cmd.Write("y")
+            _cmd.Write("y")
             resaveButton.Enabled = True
             _isSeeking = True
             Task.Run(Sub()
@@ -608,7 +608,7 @@ Namespace MoeGoe_GUI
                              If Not _isSeeking Then
                                  Return
                              End If
-                             If File.Exists(_SAVEPATH) Then
+                             If File.Exists(_strSAVEPATH) Then
                                  Invoke(New Action(Sub()
                                                        deleteButton.Enabled = True
                                                        playButton.Enabled = True
@@ -622,18 +622,18 @@ Namespace MoeGoe_GUI
                      End Sub)
         End Sub
         Private Function GetSelectedID(box As ComboBox) As Integer
-            Return _SPEAKERIDDICT(box)(box.SelectedIndex)
+            Return _dicSPEAKERIDDICT(box)(box.SelectedIndex)
         End Function
         Private Sub TTS(text1 As String, speaker As Integer)
-            cmd.Write("t")
-            cmd.Write($"[LENGTH={_LENGTHSCALE}][NOISE={_NOISESCALE}][NOISEW={_NOISESCALEW}]{Regex.Replace(text1, "\r?\n", " ")}")
-            cmd.Write(speaker.ToString())
+            _cmd.Write("t")
+            _cmd.Write($"[LENGTH={_decLENGTHSCALE}][NOISE={_decNOISESCALE}][NOISEW={_decNOISESCALEW}]{Regex.Replace(text1, "\r?\n", " ")}")
+            _cmd.Write(speaker.ToString())
         End Sub
         Private Sub VC(origin As Integer, target As Integer)
-            cmd.Write("v")
-            cmd.Write(_ORIGINPATH)
-            cmd.Write(origin.ToString())
-            cmd.Write(target.ToString())
+            _cmd.Write("v")
+            _cmd.Write(_strORIGINPATH)
+            _cmd.Write(origin.ToString())
+            _cmd.Write(target.ToString())
         End Sub
         Private Function GetTextBox() As TextBox
             Select Case modelControl.SelectedIndex
@@ -647,25 +647,25 @@ Namespace MoeGoe_GUI
         End Function
         Private Sub CleanButton_Click(sender As Object, e As EventArgs)
             Dim box As TextBox = GetTextBox()
-            Dim win As New CleanWin(box, cmd)
-            RemoveHandler cmd.OutputHandler, AddressOf Cmd_OutputHandler
+            Dim win As New CleanWin(box, _cmd)
+            RemoveHandler _cmd.OutputHandler, AddressOf Cmd_OutputHandler
             win.ShowDialog()
-            AddHandler cmd.OutputHandler, AddressOf Cmd_OutputHandler
+            AddHandler _cmd.OutputHandler, AddressOf Cmd_OutputHandler
             win.Dispose()
         End Sub
         Private Function GetParameters() As Decimal()
-            Return New Decimal() {_LENGTHSCALE, _NOISESCALE, _NOISESCALEW, _F0SCALE}
+            Return New Decimal() {_decLENGTHSCALE, _decNOISESCALE, _decNOISESCALEW, _decF0SCALE}
         End Function
         Private Sub SetParameters(lengthScale1 As Decimal, noiseScale1 As Decimal, noiseScaleW1 As Decimal)
-            _LENGTHSCALE = lengthScale1
-            _NOISESCALE = noiseScale1
-            _NOISESCALEW = noiseScaleW1
+            _decLENGTHSCALE = lengthScale1
+            _decNOISESCALE = noiseScale1
+            _decNOISESCALEW = noiseScaleW1
         End Sub
         Private Sub SetParameters(lengthScale1 As Decimal, noiseScale1 As Decimal, noiseScaleW1 As Decimal, f0Scale1 As Decimal)
-            _LENGTHSCALE = lengthScale1
-            _NOISESCALE = noiseScale1
-            _NOISESCALEW = noiseScaleW1
-            _F0SCALE = f0Scale1
+            _decLENGTHSCALE = lengthScale1
+            _decNOISESCALE = noiseScale1
+            _decNOISESCALEW = noiseScaleW1
+            _decF0SCALE = f0Scale1
         End Sub
         Private Sub AdvancedButton_Click(sender As Object, e As EventArgs)
             Dim win As New AdvancedWin(AddressOf GetParameters, AddressOf SetParameters)
@@ -684,7 +684,7 @@ Namespace MoeGoe_GUI
         End Sub
         Private Sub CheckModelHubert()
             ClearHubertMode()
-            If _MODELPATH IsNot Nothing AndAlso _CONFIGPATH IsNot Nothing AndAlso _HUBERTPATH IsNot Nothing Then
+            If _strMODELPATH IsNot Nothing AndAlso _strCONFIGPATH IsNot Nothing AndAlso _strHUBERTPATH IsNot Nothing Then
                 InitializeSpeakers()
             End If
         End Sub
@@ -694,7 +694,7 @@ Namespace MoeGoe_GUI
             .Filter = "模型文件|*.pt|所有文件|*.*"
             }
             If ofd.ShowDialog() = DialogResult.OK Then
-                DEFAULTS("_HUBERTPATHS").Add(__InlineAssignHelper(_HUBERTPATH, __InlineAssignHelper(hubertPath.Text, ofd.FileName)))
+                _DEFAULTS("_HUBERTPATHS").Add(__InlineAssignHelper(_strHUBERTPATH, __InlineAssignHelper(hubertPath.Text, ofd.FileName)))
                 CheckModelHubert()
             End If
             ofd.Dispose()
@@ -705,26 +705,26 @@ Namespace MoeGoe_GUI
                     MessageBox.Show("文件不存在！", "",
                         MessageBoxButtons.OK, MessageBoxIcon.[Error])
                 Else
-                    DEFAULTS("_HUBERTPATHS").Add(__InlineAssignHelper(_HUBERTPATH, hubertPath.Text))
+                    _DEFAULTS("_HUBERTPATHS").Add(__InlineAssignHelper(_strHUBERTPATH, hubertPath.Text))
                     CheckModelHubert()
                 End If
             End If
         End Sub
         Private Sub HAdvancedControl_Click(sender As Object, e As EventArgs)
-            Dim win As New HAdvancedWin(AddressOf GetParameters, AddressOf SetParameters, _USEF0)
+            Dim win As New HAdvancedWin(AddressOf GetParameters, AddressOf SetParameters, _bUSEF0)
             win.ShowDialog()
             win.Dispose()
         End Sub
         Private Sub MainWin_FormClosed(sender As Object, e As FormClosedEventArgs)
             Using sw As New StreamWriter("MoeGoe_GUI.config")
-                For Each pair As KeyValuePair(Of String, ExList(Of String)) In DEFAULTS
+                For Each pair As KeyValuePair(Of String, ExList(Of String)) In _DEFAULTS
                     sw.WriteLine(pair.Key & ">" & pair.Value.ToString)
                 Next
             End Using
         End Sub
         Private Sub GetHistory(box As TextBox, key As String, e As KeyEventArgs)
             Dim list1 As ExList(Of String) = Nothing
-            If Not DEFAULTS.TryGetValue(key, list1) Then
+            If Not _DEFAULTS.TryGetValue(key, list1) Then
                 Return
             End If
             If e.KeyCode = Keys.Up Then
@@ -758,45 +758,45 @@ Namespace MoeGoe_GUI
             End If
             Select Case e.KeyCode
                 Case Keys.D1
-                    box.Paste(DEFAULTS("D1").[Next]())
+                    box.Paste(_DEFAULTS("D1").[Next]())
                     box.SelectionStart -= 4
                 Case Keys.D2
-                    box.Paste(DEFAULTS("D2").[Next]())
+                    box.Paste(_DEFAULTS("D2").[Next]())
                     box.SelectionStart -= 4
                 Case Keys.D3
-                    box.Paste(DEFAULTS("D3").[Next]())
+                    box.Paste(_DEFAULTS("D3").[Next]())
                     box.SelectionStart -= 4
                 Case Keys.D4
-                    box.Paste(DEFAULTS("D4").[Next]())
+                    box.Paste(_DEFAULTS("D4").[Next]())
                     box.SelectionStart -= 4
                 Case Keys.D5
-                    box.Paste(DEFAULTS("D5").[Next]())
+                    box.Paste(_DEFAULTS("D5").[Next]())
                     box.SelectionStart -= 4
                 Case Keys.D6
-                    box.Paste(DEFAULTS("D6").[Next]())
+                    box.Paste(_DEFAULTS("D6").[Next]())
                     box.SelectionStart -= 4
                 Case Keys.D7
-                    box.Paste(DEFAULTS("D7").[Next]())
+                    box.Paste(_DEFAULTS("D7").[Next]())
                     box.SelectionStart -= 4
                 Case Keys.D8
-                    box.Paste(DEFAULTS("D8").[Next]())
+                    box.Paste(_DEFAULTS("D8").[Next]())
                     box.SelectionStart -= 4
                 Case Keys.D9
-                    box.Paste(DEFAULTS("D9").[Next]())
+                    box.Paste(_DEFAULTS("D9").[Next]())
                     box.SelectionStart -= 4
                 Case Keys.D0
-                    box.Paste(DEFAULTS("D0").[Next]())
+                    box.Paste(_DEFAULTS("D0").[Next]())
                     box.SelectionStart -= 4
             End Select
         End Sub
         Private Sub SymbolsButton_Click(sender As Object, e As EventArgs)
             Dim box As TextBox = GetTextBox()
-            Dim win As New SymbolsWin(_SYMBOLS, box)
+            Dim win As New SymbolsWin(_lstSYMBOLS, box)
             win.Show()
         End Sub
         Private Sub PlayButton_Click(sender As Object, e As EventArgs)
             Try
-                _player = New SoundPlayer(_SAVEPATH)
+                _player = New SoundPlayer(_strSAVEPATH)
                 _player.Play()
             Catch
                 MessageBox.Show("文件不存在！", "",
@@ -809,7 +809,7 @@ Namespace MoeGoe_GUI
         End Sub
         Private Sub SavePath_KeyPress(sender As Object, e As KeyPressEventArgs)
             If e.KeyChar = vbCr Then
-                DEFAULTS("_SAVEPATHS").Add(__InlineAssignHelper(_SAVEPATH, savePath.Text))
+                _DEFAULTS("_SAVEPATHS").Add(__InlineAssignHelper(_strSAVEPATH, savePath.Text))
                 SaveAudio()
             End If
         End Sub
@@ -828,11 +828,11 @@ Namespace MoeGoe_GUI
         Private Sub DeleteButton_Click(sender As Object, e As EventArgs)
             playButton.Enabled = False
             stopButton.Enabled = False
-            File.Delete(_SAVEPATH)
+            File.Delete(_strSAVEPATH)
         End Sub
         Private Sub CheckModelW2V2()
             ClearW2V2Mode()
-            If _MODELPATH IsNot Nothing AndAlso _CONFIGPATH IsNot Nothing AndAlso _W2V2PATH IsNot Nothing Then
+            If _strMODELPATH IsNot Nothing AndAlso _strCONFIGPATH IsNot Nothing AndAlso _strW2V2PATH IsNot Nothing Then
                 InitializeSpeakers()
             End If
         End Sub
@@ -842,7 +842,7 @@ Namespace MoeGoe_GUI
             .Filter = "模型文件|model.onnx"
             }
             If ofd.ShowDialog() = DialogResult.OK Then
-                DEFAULTS("_W2V2PATHS").Add(__InlineAssignHelper(_W2V2PATH, __InlineAssignHelper(W2V2Path.Text, ofd.FileName)))
+                _DEFAULTS("_W2V2PATHS").Add(__InlineAssignHelper(_strW2V2PATH, __InlineAssignHelper(W2V2Path.Text, ofd.FileName)))
                 CheckModelW2V2()
             End If
             ofd.Dispose()
@@ -853,7 +853,7 @@ Namespace MoeGoe_GUI
                     MessageBox.Show("文件不存在！", "",
                         MessageBoxButtons.OK, MessageBoxIcon.[Error])
                 Else
-                    DEFAULTS("_W2V2PATHS").Add(__InlineAssignHelper(_W2V2PATH, W2V2Path.Text))
+                    _DEFAULTS("_W2V2PATHS").Add(__InlineAssignHelper(_strW2V2PATH, W2V2Path.Text))
                     CheckModelW2V2()
                 End If
             End If
@@ -873,7 +873,7 @@ Namespace MoeGoe_GUI
             .Filter = "数据文件|*.npy|音频文件|*.wav;*.mp3;*.ogg;*.opus"
             }
             If ofd.ShowDialog() = DialogResult.OK Then
-                DEFAULTS("_EMOTIONPATHS").Add(__InlineAssignHelper(_EMOTIONPATH, __InlineAssignHelper(emotionPath.Text, ofd.FileName)))
+                _DEFAULTS("_EMOTIONPATHS").Add(__InlineAssignHelper(_strEMOTIONPATH, __InlineAssignHelper(emotionPath.Text, ofd.FileName)))
             End If
             ofd.Dispose()
         End Sub
@@ -882,7 +882,7 @@ Namespace MoeGoe_GUI
                 If Not File.Exists(emotionPath.Text) Then
                     MessageBox.Show("文件不存在！", "",
                         MessageBoxButtons.OK, MessageBoxIcon.[Error])
-                Else DEFAULTS("_EMOTIONPATHS").Add(__InlineAssignHelper(_EMOTIONPATH, emotionPath.Text))
+                Else _DEFAULTS("_EMOTIONPATHS").Add(__InlineAssignHelper(_strEMOTIONPATH, emotionPath.Text))
                 End If
             End If
         End Sub
@@ -896,14 +896,14 @@ Namespace MoeGoe_GUI
         End Sub
         Private Sub SelectSpeakers(box As ComboBox)
             box.Items.Clear()
-            If Not _SPEAKERIDDICT.ContainsKey(box) Then
-                _SPEAKERIDDICT.Add(box, New Dictionary(Of Integer, Integer))
-            Else _SPEAKERIDDICT(box).Clear()
+            If Not _dicSPEAKERIDDICT.ContainsKey(box) Then
+                _dicSPEAKERIDDICT.Add(box, New Dictionary(Of Integer, Integer))
+            Else _dicSPEAKERIDDICT(box).Clear()
             End If
-            For i As Integer = 0 To _SPEAKERS.Count - 1
-                If _SPEAKERS(i).Contains(box.Text) Then
-                    box.Items.Add(_SPEAKERS(i))
-                    _SPEAKERIDDICT(box).Add(box.Items.Count - 1, i)
+            For i As Integer = 0 To _lstSPEAKERS.Count - 1
+                If _lstSPEAKERS(i).Contains(box.Text) Then
+                    box.Items.Add(_lstSPEAKERS(i))
+                    _dicSPEAKERIDDICT(box).Add(box.Items.Count - 1, i)
                 End If
             Next
         End Sub
@@ -937,13 +937,13 @@ Namespace MoeGoe_GUI
         End Property
 
         Public Sub New(range As Integer)
-            index = -1
+            Index = -1
             Me.range = range
             list1 = New List(Of T)
         End Sub
 
         Public Sub New(collection As IEnumerable(Of T), range As Integer)
-            index = -1
+            Index = -1
             Me.range = range
             list1 = New List(Of T)(collection)
         End Sub
@@ -965,7 +965,6 @@ Namespace MoeGoe_GUI
         End Function
     End Class
 
-
     Public Class ExDictionary(Of TKey, TValue)
         Inherits Dictionary(Of TKey, TValue)
         Private ReadOnly generator As Func(Of TValue)
@@ -978,7 +977,7 @@ Namespace MoeGoe_GUI
                 If Not ContainsKey(key) Then
                     Add(key, generator())
                 End If
-                Return MyBase.item(key)
+                Return MyBase.Item(key)
             End Get
         End Property
     End Class
