@@ -6,6 +6,7 @@
     <RootNamespace>MoeGoe_WPFUI</RootNamespace>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <Version>0.5.0-alpha</Version>
   </PropertyGroup>
 
   <ItemGroup>

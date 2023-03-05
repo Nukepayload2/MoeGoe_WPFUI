@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Media
+Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports System.Text.Json.Nodes
 Imports System.Text.RegularExpressions
@@ -9,6 +10,8 @@ Class MainWindow
     Public Sub New()
         InitializeComponent()
 
+        consoleBox.Text = consoleBox.Text.Replace("{版本号}",
+            GetType(MainWindow).Assembly.GetCustomAttribute(Of AssemblyInformationalVersionAttribute)?.InformationalVersion)
         _DEFAULTS = New ExDictionary(Of String, ExList(Of String))(Function() New ExList(Of String)(5))
 
         If File.Exists("MoeGoe_GUI.config") Then
