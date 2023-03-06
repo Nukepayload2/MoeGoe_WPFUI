@@ -4,9 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoeGoe_WPFUI"
-        mc:Ignorable="d"
-        Title="SymbolsWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"
+        Title="符号输入" Height="400" Width="450" MinWidth="200" MinHeight="100">
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="8">
+        <ItemsControl x:Name="ItmKeyboard" Margin="2">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Width="50" Height="50" Margin="2" Content="{Binding .,Mode=OneTime}" Click="BtnSymbol_Click"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
 </Window>

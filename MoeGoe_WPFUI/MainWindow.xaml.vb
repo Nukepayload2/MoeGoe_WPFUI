@@ -5,6 +5,8 @@ Imports System.Runtime.InteropServices
 Imports System.Text.Json.Nodes
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports System.Windows.Media.Animation
+Imports System.Windows.Threading
 
 Class MainWindow
     Public Sub New()
@@ -661,8 +663,9 @@ Class MainWindow
         Dim win As New AdvancedWindow(AddressOf GetParameters, AddressOf SetParameters) With {.Owner = Me}
         win.ShowDialog()
     End Sub
-    Private Sub ModelControl_SelectedIndexChanged() Handles modelControl.SelectionChanged
-        '切换tab为什么要清除这些数据呢？
+    Private Sub ModelControl_SelectedIndexChanged(sender As Object, e As SelectionChangedEventArgs) Handles modelControl.SelectionChanged
+        '切换tab为什么要清除这些数据呢？这个设计太蠢了。好不容易打上的字，毫无提示就没了？
+        'If e.Source IsNot modelControl Then Return
         'Select Case modelControl.SelectedIndex
         '    Case 0
         '        ClearVITS()
@@ -701,7 +704,7 @@ Class MainWindow
         End If
     End Sub
     Private Sub HAdvancedControl_Click() Handles HAdvancedControl.Click
-        Dim win As New HAdvancedWindow(AddressOf GetParameters, AddressOf SetParameters, _bUSEF0)
+        Dim win As New HAdvancedWindow(AddressOf GetParameters, AddressOf SetParameters, _bUSEF0) With {.Owner = Me}
         win.ShowDialog()
     End Sub
     Private Sub MainWin_FormClosed() Handles Me.Closed
@@ -780,7 +783,7 @@ Class MainWindow
     End Sub
     Private Sub SymbolsButton_Click() Handles symbolsButton2.Click
         Dim box As TextBox = GetTextBox()
-        Dim win As New SymbolsWindow(_lstSYMBOLS, box)
+        Dim win As New SymbolsWindow(_lstSYMBOLS, box) With {.Owner = Me}
         win.Show()
     End Sub
     Private Sub PlayButton_Click() Handles playButton.Click
@@ -903,6 +906,29 @@ Class MainWindow
         target = value
         Return value
     End Function
+
+    WithEvents ArrowTimer As New DispatcherTimer With {.Interval = TimeSpan.FromSeconds(1)}
+    Private _firstLoaded As Boolean
+    Private Async Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If _firstLoaded Then Return
+        _firstLoaded = True
+        Await Task.Delay(500)
+        CType(Resources!ArrowMoveStoryBoard, Storyboard).Begin()
+        ArrowTimer.Start()
+    End Sub
+
+    Private Sub BtnAgreeLicense_Click(sender As Object, e As RoutedEventArgs) Handles BtnAgreeLicense.Click
+        ArrowTimer.Stop()
+        BrdReadLicense.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub BtnDisagreeLicense_Click(sender As Object, e As RoutedEventArgs) Handles BtnDisagreeLicense.Click
+        Close()
+    End Sub
+
+    Private Sub ArrowTimer_Tick(sender As Object, e As EventArgs) Handles ArrowTimer.Tick
+        CType(Resources!ArrowMoveStoryBoard, Storyboard).Begin()
+    End Sub
 End Class
 
 Public Class ExList(Of T)

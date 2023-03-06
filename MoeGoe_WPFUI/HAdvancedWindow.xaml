@@ -4,9 +4,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoeGoe_WPFUI"
-        mc:Ignorable="d"
-        Title="HAdvancedWindow" Height="450" Width="800">
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"
+        Title="参数设置" MinHeight="350" Height="400" MinWidth="257" Width="513">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="12,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="61"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Margin="8" Grid.RowSpan="2" Text="时长比例" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.RowSpan="2" Text="噪声比例" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8" />
+            <TextBlock Grid.Row="4" Grid.RowSpan="2" Text="噪声偏差" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8" />
+            <TextBlock Grid.Row="6" Grid.RowSpan="2" Text="基频比例" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="8" />
+            <Slider x:Name="lengthBox" Grid.Column="1" Margin="8" VerticalAlignment="Bottom" Minimum="0.1" Maximum="10" Value="1" />
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="4,8,4,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button x:Name="BtnResetLength" Margin="8,0">重置 (1.00)</Button>
+                <TextBlock VerticalAlignment="Center" Margin="8" Text="{Binding ElementName=lengthBox,Path=Value,Mode=OneWay,StringFormat=N2}"/>
+            </StackPanel>
+            <Slider x:Name="noiseBox" Grid.Column="1" Margin="8" VerticalAlignment="Bottom" Grid.Row="2" Minimum="0.01" Maximum="10" Value="0.67" Height="18" />
+            <StackPanel Grid.Column="1" Grid.Row="3" Margin="4,8,4,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button x:Name="BtnResetNoise" Margin="8,0">重置 (0.67)</Button>
+                <TextBlock VerticalAlignment="Center" Margin="8" Text="{Binding ElementName=noiseBox,Path=Value,Mode=OneWay,StringFormat=N2}"/>
+            </StackPanel>
+            <Slider x:Name="noisewBox" Grid.Column="1" Margin="8" VerticalAlignment="Bottom" Grid.Row="4" Minimum="0.01" Maximum="10" Value="0.8" Height="18" />
+            <StackPanel Grid.Column="1" Grid.Row="5" Margin="4,8,4,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button x:Name="BtnResetNoiseVar" Margin="8,0">重置 (0.80)</Button>
+                <TextBlock VerticalAlignment="Center" Margin="8" Text="{Binding ElementName=noisewBox,Path=Value,Mode=OneWay,StringFormat=N2}"/>
+            </StackPanel>
+            <Slider x:Name="f0Box" IsEnabled="False" Grid.Column="1" Margin="8" VerticalAlignment="Bottom" Grid.Row="6" Minimum="0.1" Maximum="10" Value="1" Height="18" />
+            <StackPanel Grid.Column="1" Grid.Row="7" Margin="4,8,4,0" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button x:Name="BtnResetF0" Margin="8,0">重置 (1.00)</Button>
+                <TextBlock VerticalAlignment="Center" Margin="8" Text="{Binding ElementName=f0Box,Path=Value,Mode=OneWay,StringFormat=N2}"/>
+            </StackPanel>
+        </Grid>
+        <Button x:Name="confirmButton" Grid.Row="1" Margin="8" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24,4">确定</Button>
     </Grid>
 </Window>
