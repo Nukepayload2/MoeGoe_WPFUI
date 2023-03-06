@@ -658,7 +658,7 @@ Class MainWindow
         _decF0SCALE = f0Scale1
     End Sub
     Private Sub AdvancedButton_Click() Handles paramsButton2.Click
-        Dim win As New AdvancedWindow(AddressOf GetParameters, AddressOf SetParameters)
+        Dim win As New AdvancedWindow(AddressOf GetParameters, AddressOf SetParameters) With {.Owner = Me}
         win.ShowDialog()
     End Sub
     Private Sub ModelControl_SelectedIndexChanged() Handles modelControl.SelectionChanged
