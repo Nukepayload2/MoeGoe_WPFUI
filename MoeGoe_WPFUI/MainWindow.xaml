@@ -265,7 +265,7 @@
                 <Button x:Name="BtnDisagreeLicense">不同意，退出程序</Button>
             </StackPanel>
         </Border>
-        <GroupBox x:Name="savePanel" Grid.Row="2" Header="保存文件">
+        <GroupBox x:Name="savePanel" IsEnabled="False" Grid.Row="2" Header="保存文件">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
