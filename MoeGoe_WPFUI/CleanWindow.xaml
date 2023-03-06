@@ -4,9 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoeGoe_WPFUI"
-        mc:Ignorable="d"
-        Title="CleanWindow" Height="450" Width="800">
-    <Grid>
-        
+        mc:Ignorable="d" WindowStartupLocation="CenterOwner"
+        Title="文本清理" Height="222" MinHeight="200" Width="245" MinWidth="200">
+    <Grid Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="TxtClean" AcceptsReturn="True" Margin="4" TextWrapping="Wrap"/>
+        <Button x:Name="cleanButton" Grid.Row="1" Padding="24,4" HorizontalAlignment="Center" VerticalAlignment="Center">清理</Button>
+        <TextBox x:Name="cleanedBox" Grid.Row="2" AcceptsReturn="True" Margin="4" TextWrapping="Wrap"/>
+        <Button x:Name="confirmButton" Grid.Row="3" Padding="24,4" HorizontalAlignment="Center" VerticalAlignment="Center">确定</Button>
     </Grid>
 </Window>

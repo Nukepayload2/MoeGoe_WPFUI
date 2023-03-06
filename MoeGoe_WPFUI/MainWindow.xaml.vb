@@ -638,7 +638,7 @@ Class MainWindow
     End Function
     Private Sub CleanButton_Click() Handles cleanButton2.Click
         Dim box As TextBox = GetTextBox()
-        Dim win As New CleanWindow(box, _cmd)
+        Dim win As New CleanWindow(box, _cmd) With {.Owner = Me}
         RemoveHandler _cmd.OutputHandler, AddressOf Cmd_OutputHandler
         win.ShowDialog()
         AddHandler _cmd.OutputHandler, AddressOf Cmd_OutputHandler

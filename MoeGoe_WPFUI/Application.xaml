@@ -8,6 +8,35 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/Win10.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Padding" Value="12,4"/>
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{StaticResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+            <Style TargetType="GroupBox">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Template" Value="{StaticResource GroupBoxWin10Template}"/>
+                <Setter Property="BorderBrush">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{StaticResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="ComboBox">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Template" Value="{StaticResource ComboBoxWin10Template}"/>
+            </Style>
+            <Style TargetType="TabControl">
+                <Setter Property="Margin" Value="3"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
