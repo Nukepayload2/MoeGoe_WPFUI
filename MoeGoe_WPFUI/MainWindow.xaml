@@ -284,7 +284,7 @@
             </Grid>
         </GroupBox>
         <TextBox x:Name="consoleBox" Grid.Column="1" TextWrapping="Wrap" Grid.RowSpan="3" IsReadOnly="True"
-                 Text="MoeGoe WPF UI, 版本 {版本号}&#10;© 2023 Nukepayload2，CjangCjengh，以及其他贡献者。保留所有权利。&#10;风险提示：使用此类软件可能产生版权纠纷。模型中包含的语音可能来自出版物的一部分，它们受到中国和国际版权法的保护。违反版权法的行为可能导致行政或刑事处罚。&#10;如继续使用，则默认您同意下列许可条款和隐私声明：&#10; · 同意此软件收集信息用于版权保护取证。&#10; · 不得将此软件的产物用于违反法律和地方规定，或者有违公序良俗的用途。&#10; · 此软件永久免费，严禁倒卖。&#10; · 违反许可条款的行为，一经发现，将面临法律允许范围内最大限度的起诉。"
+                 Text="MoeGoe WPF UI, 版本 {版本号}&#10;© 2023 Nukepayload2，CjangCjengh，以及其他贡献者。保留所有权利。&#10;&#10;风险提示：即使是非出自恶意，使用此类软件仍可能产生版权纠纷。模型中包含的语音可能来自出版物的一部分，它们受到中国和国际版权法的保护。违反版权法的行为将导致民事或刑事处罚。&#10;&#10;如继续使用，则默认您同意下列许可条款和隐私声明：&#10; · 同意此软件收集信息用于版权保护取证。&#10; · 不得将此软件的产物用于违反法律和地方规定，或者有违公序良俗的用途。&#10; · 此软件永久免费，严禁倒卖。&#10;&#10;警告：违反许可条款的行为，一经发现，将面临法律允许范围内最大限度的起诉。"
                  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
     </Grid>

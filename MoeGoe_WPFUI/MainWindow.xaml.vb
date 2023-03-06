@@ -227,7 +227,7 @@ Class MainWindow
                 check = Nothing
         End Select
     End Sub
-    Private Sub OpenModel_Click() Handles openModel.Click
+    Private Sub OpenModel_Click() Handles openModel.Click, HOpenModel.Click, WOpenModel.Click
         Dim box As TextBox = Nothing
         Dim key As String = Nothing
         Dim check As Action = Nothing
@@ -277,7 +277,7 @@ Class MainWindow
                 check = Nothing
         End Select
     End Sub
-    Private Sub OpenConfig_Click() Handles openConfig.Click
+    Private Sub OpenConfig_Click() Handles openConfig.Click, HOpenConfig.Click, WOpenConfig.Click
         Dim box As TextBox = Nothing
         Dim key As String = Nothing
         Dim check As Action = Nothing
@@ -407,7 +407,7 @@ Class MainWindow
                 Return Nothing
         End Select
     End Function
-    Private Sub OpenOrigin_Click() Handles openOrigin.Click
+    Private Sub OpenOrigin_Click() Handles openOrigin.Click, HOpenOrigin.Click, WOpenOrigin.Click
         Dim box As TextBox = GetOriginBox()
         Dim ofd As New Forms.OpenFileDialog With
             {
@@ -700,7 +700,7 @@ Class MainWindow
             End If
         End If
     End Sub
-    Private Sub HAdvancedControl_Click() Handles HAdvancedControl.KeyDown
+    Private Sub HAdvancedControl_Click() Handles HAdvancedControl.Click
         Dim win As New HAdvancedWindow(AddressOf GetParameters, AddressOf SetParameters, _bUSEF0)
         win.ShowDialog()
     End Sub
