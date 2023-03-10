@@ -5,6 +5,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text.Json.Nodes
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports System.Windows.Interop
 Imports System.Windows.Media.Animation
 Imports System.Windows.Threading
 
@@ -907,8 +908,11 @@ Class MainWindow
         Return value
     End Function
 
-    WithEvents ArrowTimer As New DispatcherTimer With {.Interval = TimeSpan.FromSeconds(1)}
+    WithEvents ArrowTimer As New DispatcherTimer With {
+        .Interval = TimeSpan.FromSeconds(1)
+    }
     Private _firstLoaded As Boolean
+    Private _agreementArrowMoveCount As Integer
     Private Async Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If _firstLoaded Then Return
         _firstLoaded = True
@@ -928,6 +932,73 @@ Class MainWindow
 
     Private Sub ArrowTimer_Tick(sender As Object, e As EventArgs) Handles ArrowTimer.Tick
         CType(Resources!ArrowMoveStoryBoard, Storyboard).Begin()
+        _agreementArrowMoveCount += 1
+        If _agreementArrowMoveCount = 3 Then
+            BtnAgreeLicense.IsEnabled = True
+        End If
+    End Sub
+
+    Private _surveyCheckCount As Integer
+    Private _surveyDangerousLevel As Integer
+    Private Sub SurveyItem_Checked(sender As Object, e As RoutedEventArgs)
+        _surveyCheckCount += 1
+        _surveyDangerousLevel += DirectCast(sender, CheckBox).Tag
+    End Sub
+
+    Private Sub SurveyItem_Unchecked(sender As Object, e As RoutedEventArgs)
+        _surveyCheckCount -= 1
+        _surveyDangerousLevel -= DirectCast(sender, CheckBox).Tag
+    End Sub
+
+    Private Sub BtnSubmitSurvey_Click() Handles BtnSubmitSurvey.Click
+        If _surveyCheckCount < 1 Then
+            MsgBox("请选择用途", vbInformation, "使用方法调查")
+            Return
+        End If
+
+        Dim handle = New WindowInteropHelper(Me).Handle
+
+        If _surveyDangerousLevel > 0 Then
+            Dim dlgPage As New Forms.TaskDialogPage With {
+                .Buttons = New Forms.TaskDialogButtonCollection From {
+                    "摒弃邪念",
+                    "移步其它软件"
+                },
+                .Caption = "检测到邪念",
+                .AllowMinimize = False,
+                .AllowCancel = False,
+                .Heading = "使用此软件需要心无邪念",
+                .Text = "邪念会使用户遭到 AI 的反噬。
+为了您和其他人的安全，请选择："
+            }
+            Forms.TaskDialog.ShowDialog(handle, dlgPage)
+            My.Application.Shutdown()
+            Return
+        End If
+
+        Dim monitorTipPage As New Forms.TaskDialogPage With {
+            .Buttons = New Forms.TaskDialogButtonCollection From {
+                New Forms.TaskDialogButton("继续使用") With {
+                    .ShowShieldIcon = True
+                },
+                "移步其它软件"
+            },
+            .Caption = "再次提醒",
+            .AllowMinimize = False,
+            .AllowCancel = False,
+            .Heading = "将进入监控区域",
+            .Text = "此软件收集使用记录等数据用于版权保护，并且可能在您所处的国家或地区之外处理数据。"
+        }
+        Dim monitorSelection = Forms.TaskDialog.ShowDialog(handle, monitorTipPage)
+        If Not monitorSelection.ShowShieldIcon Then
+            My.Application.Shutdown()
+            Return
+        End If
+        BrdSurvey.Visibility = Visibility.Collapsed
+    End Sub
+
+    Private Sub MainWindow_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        WpfVBHost.Instance.CurrentWindow = Me
     End Sub
 End Class
 

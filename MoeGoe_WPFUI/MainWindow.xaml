@@ -249,23 +249,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Border x:Name="BrdReadLicense" Grid.Row="1" d:Visibility="Collapsed"
-                Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
-            <StackPanel Margin="12,0" VerticalAlignment="Center">
-                <TextBlock Margin="2">使用前请仔细阅读风险提示、许可条款和隐私声明。</TextBlock>
-                <TextBlock x:Name="TblArrow" FontSize="32" HorizontalAlignment="Right" Margin="0,0,12,0" RenderTransformOrigin="0.5,0.5">
-                    <TextBlock.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </TextBlock.RenderTransform>→</TextBlock>
-                <Button x:Name="BtnAgreeLicense">已读，同意并继续使用</Button>
-                <Button x:Name="BtnDisagreeLicense">不同意，退出程序</Button>
-            </StackPanel>
-        </Border>
         <GroupBox x:Name="savePanel" IsEnabled="False" Grid.Row="2" Header="保存文件">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -286,8 +269,49 @@
                 </StackPanel>
             </Grid>
         </GroupBox>
+        <Border x:Name="BrdSurvey" Grid.RowSpan="3" d:Visibility="Collapsed"
+                Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <StackPanel Margin="12,0" VerticalAlignment="Center">
+                <TextBlock Margin="0,4" FontSize="16">您打算如何使用此软件？</TextBlock>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">整蛊</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">恶搞</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="0">写论文</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">炫耀自己的电脑</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">当变声器聊天用</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="0">生成声音然后自己听</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">二次销售</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">制作游戏的 MOD，发布出去</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">对自己喜欢的作品进行二创，发布出去</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">宣称自己有超能力，可以和死者对话</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">宣称自己是神使，可以和神明对话</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="0">把生成的声音做成早晨的闹铃，仅自己用</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">把生成的声音卖了赚钱</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">把生成的语音发给别人炫耀</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">把生成的歌曲发给别人听</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">把生成的声音用于视频配音或 BGM ，然后发出去</CheckBox>
+                <CheckBox Checked="SurveyItem_Checked" Unchecked="SurveyItem_Unchecked" Tag="1">把生成的声音作为游戏素材，并发布此游戏</CheckBox>
+                <Button x:Name="BtnSubmitSurvey" Margin="0,4">确定</Button>
+            </StackPanel>
+        </Border>
+        <Border x:Name="BrdReadLicense" Grid.RowSpan="3" d:Visibility="Collapsed"
+                Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
+            <StackPanel Margin="12,0" VerticalAlignment="Center">
+                <TextBlock Margin="2">使用前请仔细阅读风险提示、许可条款和隐私声明。</TextBlock>
+                <TextBlock x:Name="TblArrow" FontSize="32" HorizontalAlignment="Right" Margin="0,0,12,0" RenderTransformOrigin="0.5,0.5">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>→</TextBlock>
+                <Button x:Name="BtnAgreeLicense" IsEnabled="False">已读，同意并继续使用</Button>
+                <Button x:Name="BtnDisagreeLicense">不同意，退出程序</Button>
+            </StackPanel>
+        </Border>
         <TextBox x:Name="consoleBox" Grid.Column="1" TextWrapping="Wrap" Grid.RowSpan="3" IsReadOnly="True"
-                 Text="MoeGoe WPF UI, 版本 {版本号}&#10;© 2023 Nukepayload2，CjangCjengh，以及其他贡献者。保留所有权利。&#10;&#10;风险提示：即使是非出自恶意，使用此类软件仍可能产生版权纠纷。模型中包含的语音可能来自出版物的一部分，它们受到中国和国际版权法的保护。违反版权法的行为将导致民事或刑事处罚。&#10;&#10;许可条款：&#10;· 不得将此软件的产物用于违反法律和地方规定，或者有违公序良俗的用途。&#10; · 此软件永久免费，严禁倒卖。&#10;警告：违反许可条款的行为，一经发现，将面临法律允许范围内最大限度的起诉。&#10;&#10;隐私声明：&#10; · 此软件会收集信息用于版权保护取证。数据可能在您所在的国家或地区外处理。"
+                 Text="MoeGoe WPF UI, 版本 {版本号}&#10;© 2023 Nukepayload2，CjangCjengh，以及其他贡献者。保留所有权利。&#10;&#10;风险提示：即使是并非出自恶意，使用此类软件仍可能产生版权纠纷。模型中包含的语音可能来自出版物的一部分，它们受到中国和国际版权法的保护。违反版权法的行为将导致民事或刑事处罚。&#10;&#10;许可条款：&#10;· 不得将此软件的产物用于违反法律和地方规定，或者有违公序良俗的用途。&#10; · 此软件永久免费，严禁倒卖。&#10;警告：违反许可条款的行为，一经发现，将面临法律允许范围内最大限度的起诉。&#10;&#10;隐私声明：&#10; · 此软件会收集信息用于版权保护取证。数据可能在您所在的国家或地区外处理。"
                  HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible"
                  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
     </Grid>
