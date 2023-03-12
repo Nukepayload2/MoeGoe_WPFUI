@@ -5,7 +5,10 @@ Public Class VitsSpeechTransformModel
 
     Public ReadOnly Property Output As New SpeechOutputModel
 
-    Public ReadOnly Property OpenSpeech As ICommand
+    Public ReadOnly Property OpenOriginalSpeech As New OpenFileCommand(
+        Function() SpeechPath,
+        Sub(it) SpeechPath = it,
+        "音频文件|*.wav;*.mp3;*.ogg;*.opus", "打开原音频")
 
     Dim _SpeechPath As String
     Public Property SpeechPath As String

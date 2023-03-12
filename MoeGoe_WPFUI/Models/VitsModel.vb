@@ -1,11 +1,22 @@
 ﻿Imports System.ComponentModel
+Imports System.Text.Json.Serialization
 
 Public Class VitsModel
     Implements INotifyPropertyChanged
 
-    Public ReadOnly Property OpenModel As ICommand
+    Private ReadOnly _parent As MainViewModel
+
+    Public Sub New(mainViewModel As MainViewModel)
+        _parent = mainViewModel
+    End Sub
+
+    Public ReadOnly Property OpenModel As New OpenFileCommand(
+        Function() ModelPath,
+        Sub(it) ModelPath = it,
+        "模型文件|*.pth|所有文件|*.*", "打开 VITS 模型")
 
     Dim _ModelPath As String
+    <JsonInclude>
     Public Property ModelPath As String
         Get
             Return _ModelPath
@@ -18,9 +29,13 @@ Public Class VitsModel
         End Set
     End Property
 
-    Public ReadOnly Property OpenConfig As ICommand
+    Public ReadOnly Property OpenConfig As New OpenFileCommand(
+        Function() ConfigPath,
+        Sub(it) ConfigPath = it,
+        "配置文件|*.json", "打开 VITS 配置文件")
 
     Dim _ConfigPath As String
+    <JsonInclude>
     Public Property ConfigPath As String
         Get
             Return _ConfigPath
@@ -54,6 +69,7 @@ Public Class VitsModel
         Set(value As Integer)
             If _UsageSelectedIndex <> value Then
                 _UsageSelectedIndex = value
+                _parent.UpdateActiveOutput()
                 RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(NameOf(UsageSelectedIndex)))
             End If
         End Set

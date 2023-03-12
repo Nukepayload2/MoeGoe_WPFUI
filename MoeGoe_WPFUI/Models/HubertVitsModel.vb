@@ -3,7 +3,16 @@
 Public Class HubertVitsModel
     Implements INotifyPropertyChanged
 
-    Public ReadOnly Property OpenModel As ICommand
+    Private ReadOnly _parent As MainViewModel
+
+    Public Sub New(mainViewModel As MainViewModel)
+        _parent = mainViewModel
+    End Sub
+
+    Public ReadOnly Property OpenModel As New OpenFileCommand(
+        Function() ModelPath,
+        Sub(it) ModelPath = it,
+        "模型文件|*.pth|所有文件|*.*", "打开 VITS 模型")
 
     Dim _ModelPath As String
     Public Property ModelPath As String
@@ -18,7 +27,10 @@ Public Class HubertVitsModel
         End Set
     End Property
 
-    Public ReadOnly Property OpenConfig As ICommand
+    Public ReadOnly Property OpenConfig As New OpenFileCommand(
+        Function() ConfigPath,
+        Sub(it) ConfigPath = it,
+        "配置文件|*.json", "打开 VITS 配置文件")
 
     Dim _ConfigPath As String
     Public Property ConfigPath As String
@@ -33,7 +45,10 @@ Public Class HubertVitsModel
         End Set
     End Property
 
-    Public ReadOnly Property OpenHubert As ICommand
+    Public ReadOnly Property OpenHubert As New OpenFileCommand(
+        Function() HubertPath,
+        Sub(it) HubertPath = it,
+        "模型文件|*.pt|所有文件|*.*", "打开 HuBERT 模型")
 
     Dim _HubertPath As String
     Public Property HubertPath As String
@@ -62,7 +77,10 @@ Public Class HubertVitsModel
         End Set
     End Property
 
-    Public ReadOnly Property OpenOriginalSpeech As ICommand
+    Public ReadOnly Property OpenOriginalSpeech As New OpenFileCommand(
+        Function() OriginalSpeechPath,
+        Sub(it) OriginalSpeechPath = it,
+        "音频文件|*.wav;*.mp3;*.ogg;*.opus", "打开原音频")
 
     Dim _OriginalSpeechPath As String
     Public Property OriginalSpeechPath As String
@@ -78,6 +96,7 @@ Public Class HubertVitsModel
     End Property
 
     Dim _UsageSelectedIndex As Integer
+
     Public Property UsageSelectedIndex As Integer
         Get
             Return _UsageSelectedIndex
